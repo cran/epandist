@@ -11,7 +11,7 @@ pepan(x = 0, mu = 0, r = 5^0.5)
 
 \item{mu}{mean of distribution.}
 
-\item{r}{half the range of the distribution, ie the distance from the mean to the smallest/largest value supported by the distribution. \code{r=5^.5} correspons to a standard deviation of 1.}
+\item{r}{half the range of the distribution, ie the distance from the mean to the smallest/largest value supported by the distribution. \code{r=5^.5} corresponds to a standard deviation of 1.}
 }
 \value{
 probability of value below \code{x} given \code{mu} and \code{r}.

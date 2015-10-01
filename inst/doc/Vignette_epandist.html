@@ -10,7 +10,7 @@
 
 <meta name="author" content="Mathias Borritz Milfeldt" />
 
-<meta name="date" content="2015-09-26" />
+<meta name="date" content="2015-10-01" />
 
 <title>Introduction to epandist</title>
 
@@ -72,7 +72,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="header">
 <h1 class="title">Introduction to epandist</h1>
 <h4 class="author"><em>Mathias Borritz Milfeldt</em></h4>
-<h4 class="date"><em>2015-09-26</em></h4>
+<h4 class="date"><em>2015-10-01</em></h4>
 </div>
 
 
@@ -83,23 +83,52 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="the-epanechnikov-distribution" class="section level2">
 <h2>The Epanechnikov distribution</h2>
 <p>The Epanechnikov kernel is often used in the context of non-parametric estimation. However the kernel may also be considered a distribution in its own right. The Epanechnikov “distribution” is simply a concave pylonomial of second degree. As such the distribution entails some desirable properties. For one thing it is a straight forward way of achieving an s-shaped cumulative distribution function. Furthermore the distribution allows for untroublesome calculation of the expected value of a censored variable.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">require</span>(<span class="st">&quot;epandist&quot;</span>)
-<span class="kw">curve</span>(<span class="kw">depan</span>(x),<span class="dt">xlim=</span><span class="kw">c</span>(-<span class="fl">2.5</span>,<span class="fl">2.5</span>),<span class="dt">yaxs=</span><span class="st">'i'</span>,<span class="dt">col=</span><span class="st">&quot;blue&quot;</span>)  <span class="co">#Mean=0, sd=1</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">require</span>(<span class="st">&quot;epandist&quot;</span>)</code></pre></div>
+<pre><code>## Loading required package: epandist</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">curve</span>(<span class="kw">depan</span>(x),<span class="dt">xlim=</span><span class="kw">c</span>(-<span class="fl">2.5</span>,<span class="fl">2.5</span>),<span class="dt">yaxs=</span><span class="st">'i'</span>,<span class="dt">col=</span><span class="st">&quot;blue&quot;</span>)  <span class="co">#Mean=0, sd=1</span>
 <span class="kw">title</span>(<span class="st">&quot;The Epanechnikov probability distribution function&quot;</span>,<span class="dt">cex.main=</span><span class="dv">1</span>)</code></pre></div>
 <p><img src="data:image/png;base64,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" alt /></p>
 <p>The Epanechnikov distribution is controlled by two parameters: <span class="math inline">\(\mu\)</span> and <span class="math inline">\(r\)</span>. <span class="math inline">\(\;\mu\)</span> represents the mean, mode and median, which all coincide since the distribution is symmetrical. <span class="math inline">\(\;r\)</span> represents the spread and corresponds to the distance between the mean and the smallest/largest possible value supported by the distribution, i.e. half the range. <span class="math inline">\(\;r=\sqrt{5}\)</span> yields a standard deviation of exactly 1.</p>
 </div>
-<div id="the-cumulative-distribution-function-and-quantile-function" class="section level2">
-<h2>The cumulative distribution function and quantile function</h2>
+<div id="the-cumulative-distribution-function-and-the-quantile-function" class="section level2">
+<h2>The cumulative distribution function and the quantile function</h2>
 <p>The cumulative distribution function is given by <span class="math display">\[P(X&lt;k\; | \; \mu,\; k)=\frac{ -\Big(\frac{k-\mu}{r}\Big)^3 + 3\Big(\frac{k-\mu}{r}\Big) + 2}{4} \]</span></p>
 <p>This equation is implemented in the <code>pepan</code>-function.</p>
 <p>Solving the cubic equation above yeilds the quantile function. It is beyond the scope of this introduction to show how this is done but the solution turns out to be</p>
-<p><span class="math display">\[Q(p\; | \; \mu,\; k)=\frac{2}{3}cos\Big(acos(1-2p)-2\pi\Big)r+\mu \]</span></p>
+<p><span class="math display">\[Q(p\; | \; \mu,\; k)=2\,cos\Big(\frac{acos(1-2p)-2\pi}{3}\Big)r+\mu \]</span></p>
 <p>This equation is implemented in the <code>qepan</code>-function.</p>
+<div id="example---using-pepan-and-qepan" class="section level3">
+<h3>Example - using <code>pepan</code> and <code>qepan</code></h3>
+<p>Consider an epanechnikov-distributed variable with distribution parameters <span class="math inline">\(\mu=10\)</span> and <span class="math inline">\(r=4\)</span> (note that only values between 6 and 14 are supported by the distribution).</p>
+<p>What is the probability that <span class="math inline">\(x&lt;8\,\)</span>? To answer this question use the <code>pepan</code>-function:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">pepan</span>(<span class="dt">x=</span><span class="dv">8</span>,<span class="dt">mu=</span><span class="dv">10</span>,<span class="dt">r=</span><span class="dv">4</span>) <span class="co">#Calculate probability</span></code></pre></div>
+<pre><code>## [1] 0.15625</code></pre>
+<p>The propability of drawing a value below 8 is thus 15.6 percent.</p>
+<p>Where is the lower and upper quartile located? To answer this question use the <code>qepan</code>-function:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qepan</span>(<span class="dt">p=</span><span class="fl">0.25</span>,<span class="dt">mu=</span><span class="dv">10</span>,<span class="dt">r=</span><span class="dv">4</span>) <span class="co">#Lower quantile </span>
+<span class="kw">qepan</span>(<span class="dt">p=</span><span class="fl">0.75</span>,<span class="dt">mu=</span><span class="dv">10</span>,<span class="dt">r=</span><span class="dv">4</span>) <span class="co">#Upper quantile</span></code></pre></div>
+<pre><code>## [1] 8.610815
+## [1] 11.38919</code></pre>
+<p>Thus half of the observations drawn from the distribution are located between 8.6 and 11.4.</p>
 </div>
-<div id="example---the-effect-of-an-emission-ceiling" class="section level2">
-<h2>Example - the effect of an emission ceiling</h2>
+</div>
+<div id="working-with-censored-variables" class="section level2">
+<h2>Working with censored variables</h2>
 <p>As has already been stated the Epanechnikov distribution is convenient when working with censored variables since it allows for calculating of the expected value and the censoring point. In the remaining part of this introduction these properties are demonstrated.</p>
+<div id="example---using-evepan-and-cepan" class="section level3">
+<h3>Example - using <code>evepan</code> and <code>cepan</code></h3>
+<p>Consider an epanechnikov-distributed variable with zero mean and a standard deviation of 1 (corresponding to <span class="math inline">\(r=\sqrt{5}\)</span>). The distribution is left-censored at <span class="math inline">\(-\frac{1}{2}\)</span>. What is the expected value? To answer this question use the <code>evepan</code>-function:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">evepan</span>(<span class="dt">c=</span>-.<span class="dv">5</span>,<span class="dt">mu=</span><span class="dv">0</span>,<span class="dt">r=</span><span class="dv">5</span>^.<span class="dv">5</span>) <span class="co">#Calculate expected value</span></code></pre></div>
+<pre><code>## [1] 0.2108396</code></pre>
+<p>Not surprisingly the expected value is greater than <span class="math inline">\(\mu\)</span>.</p>
+<p>Which censoring point yields an expected value of 1? To answer this question use the <code>cepan</code>-function:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">cepan</span>(<span class="dt">ev=</span><span class="dv">1</span>,<span class="dt">mu=</span><span class="dv">0</span>,<span class="dt">r=</span><span class="dv">5</span>^.<span class="dv">5</span>) <span class="co">#Calculate censoring point</span></code></pre></div>
+<pre><code>## [1] 0.8981712</code></pre>
+<p>Thus a censoring point at 0.9 yields an expected value of 1.</p>
+</div>
+</div>
+<div id="case-study---the-effect-of-an-emission-ceiling" class="section level2">
+<h2>Case study - the effect of an emission ceiling</h2>
 <p>When may the expected value of a censored variable be of interest? If e.g. the effect of a proposed emission ceiling ought to be evaluated. The emission level in the absence of the ceiling may be thought of as a random variable reflecting that future emissions are subject to uncertainty. The ceiling is simply the censoring point. With a bit of ingenuity the expected abatement can be calculated using the <code>evepan</code>-function.</p>
 <div id="calculating-expected-abatement" class="section level3">
 <h3>Calculating expected abatement</h3>
@@ -117,12 +146,12 @@ dist_mean&lt;-<span class="dv">100</span> <span class="co">#Mean prior to censor
 
 dist_range&lt;-<span class="dv">10</span> <span class="co">#Half of distribution range</span>
 
-x&lt;-<span class="kw">repan</span>(<span class="dv">1000000</span>,dist_mean,dist_range) <span class="co">#Generating random data</span>
+x&lt;-<span class="kw">repan</span>(<span class="dv">1000000</span>,dist_mean,dist_range) <span class="co">#Generating epan-distibuted random data</span>
 
 x[x &gt;<span class="st"> </span>censoringpoint]&lt;-<span class="st"> </span>censoringpoint <span class="co">#Censoring data</span>
 
 dist_mean-<span class="kw">mean</span>(x) <span class="co">#Approximate expected abatement</span></code></pre></div>
-<pre><code>## [1] 1.417418</code></pre>
+<pre><code>## [1] 1.415343</code></pre>
 <p>The author finds this verification very pleasing.</p>
 <p>Readers who are mathematically inclined may also think of this type of problem in terms of mathematical notation. Finding the expected abatement is the equivalent of solving the integral below:</p>
 <p><span class="math display">\[\int_{c}^{\infty} pdf(x)*(x-c)\;dx\]</span></p>

@@ -2,7 +2,7 @@
 % Please edit documentation in R/evepan.R
 \name{evepan}
 \alias{evepan}
-\title{Calculate expected value}
+\title{Calculate expected value of censored variable}
 \usage{
 evepan(c = 0, mu = 0, r = 5^0.5)
 }
@@ -11,7 +11,7 @@ evepan(c = 0, mu = 0, r = 5^0.5)
 
 \item{mu}{mean of distribution prior to censoring.}
 
-\item{r}{half the range of the distribution, ie the distance from the mean to the smallest/largest value supported by the distribution. \code{r=5^.5} correspons to a standard deviation of 1.}
+\item{r}{half the range of the distribution, ie the distance from the mean to the smallest/largest value supported by the distribution. \code{r=5^.5} corresponds to a standard deviation of 1.}
 }
 \value{
 the expected value associated with \code{c}, \code{mu} and \code{r}.

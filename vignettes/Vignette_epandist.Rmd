@@ -24,7 +24,7 @@ title("The Epanechnikov probability distribution function",cex.main=1)
 
 The Epanechnikov distribution is controlled by two parameters: $\mu$ and $r$. $\;\mu$ represents the mean, mode and median, which all coincide since the distribution is symmetrical. $\;r$ represents the spread and corresponds to the distance between the mean and the smallest/largest possible value supported by the distribution, i.e. half the range. $\;r=\sqrt{5}$ yields a standard deviation of exactly 1.
 
-## The cumulative distribution function and quantile function
+## The cumulative distribution function and the quantile function
 
 The cumulative distribution function is given by
 $$P(X<k\; | \; \mu,\; k)=\frac{ -\Big(\frac{k-\mu}{r}\Big)^3 + 3\Big(\frac{k-\mu}{r}\Big) + 2}{4} $$
@@ -33,13 +33,49 @@ This equation is implemented in the `pepan`-function.
 
 Solving the cubic equation above yeilds the quantile function. It is beyond the scope of this introduction to show how this is done but the solution turns out to be
 
-$$Q(p\; | \; \mu,\; k)=\frac{2}{3}cos\Big(acos(1-2p)-2\pi\Big)r+\mu $$
+$$Q(p\; | \; \mu,\; k)=2\,cos\Big(\frac{acos(1-2p)-2\pi}{3}\Big)r+\mu $$
 
 This equation is implemented in the `qepan`-function.
 
-## Example - the effect of an emission ceiling
+### Example - using `pepan` and `qepan`
+Consider an epanechnikov-distributed variable with distribution parameters $\mu=10$ and $r=4$ (note that only values between 6 and 14 are supported by the distribution). 
+
+What is the probability that $x<8\,$? To answer this question use the `pepan`-function:
+```{r}
+pepan(x=8,mu=10,r=4) #Calculate probability
+```
+The propability of drawing a value below 8 is thus 15.6 percent.
+
+Where is the lower and upper quartile located? To answer this question use the `qepan`-function:
+```{r,results='hold'}
+qepan(p=0.25,mu=10,r=4) #Lower quantile 
+qepan(p=0.75,mu=10,r=4) #Upper quantile
+```
+Thus half of the observations drawn from the distribution are located between 8.6 and 11.4.
+
+
+##Working with censored variables
 As has already been stated the Epanechnikov distribution is convenient when working with censored variables since it allows for calculating of the expected value and the censoring point. In the remaining part of this introduction these properties are demonstrated.
 
+### Example - using `evepan` and `cepan`
+Consider an epanechnikov-distributed variable with zero mean and a standard deviation of 1 (corresponding to $r=\sqrt{5}$). The distribution is left-censored at $-\frac{1}{2}$. What is the expected value? To answer this question use the `evepan`-function:
+
+```{r}
+evepan(c=-.5,mu=0,r=5^.5) #Calculate expected value
+```
+
+Not surprisingly the expected value is greater than $\mu$.
+
+Which censoring point yields an expected value of 1? To answer this question use the `cepan`-function:
+
+```{r}
+cepan(ev=1,mu=0,r=5^.5) #Calculate censoring point
+```
+
+Thus a censoring point at 0.9 yields an expected value of 1.
+
+
+## Case study - the effect of an emission ceiling
 When may the expected value of a censored variable be of interest?  If e.g. the effect of a proposed emission ceiling ought to be evaluated. The emission level in the absence of the ceiling may be thought of as a random variable reflecting that future emissions are subject to uncertainty. The ceiling is simply the censoring point. With a bit of ingenuity the expected abatement can be calculated using the `evepan`-function.
 
 
@@ -66,7 +102,7 @@ dist_mean<-100 #Mean prior to censoring
 
 dist_range<-10 #Half of distribution range
 
-x<-repan(1000000,dist_mean,dist_range) #Generating random data
+x<-repan(1000000,dist_mean,dist_range) #Generating epan-distibuted random data
 
 x[x > censoringpoint]<- censoringpoint #Censoring data
 

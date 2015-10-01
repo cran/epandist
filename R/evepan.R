@@ -1,11 +1,11 @@
-#' Calculate expected value
+#' Calculate expected value of censored variable
 #'
 #' This function calculates the expected value of a random left-censored epanechnikov-distributed variable with a given censoring point.
 #' The inverse of this function is \code{cepan}.
 #'
 #' @param c censoring point.
 #' @param mu mean of distribution prior to censoring.
-#' @param r half the range of the distribution, ie the distance from the mean to the smallest/largest value supported by the distribution. \code{r=5^.5} correspons to a standard deviation of 1.
+#' @param r half the range of the distribution, ie the distance from the mean to the smallest/largest value supported by the distribution. \code{r=5^.5} corresponds to a standard deviation of 1.
 #' @return the expected value associated with \code{c}, \code{mu} and \code{r}.
 #' @keywords distribution
 #' @examples

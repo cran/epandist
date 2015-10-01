@@ -4,7 +4,7 @@
 #'
 #' @param p probability.
 #' @param mu mean of distribution.
-#' @param r half the range of the distribution, ie the distance from the mean to the smallest/largest value supported by the distribution. \code{r=5^.5} correspons to a standard deviation of 1.
+#' @param r half the range of the distribution, ie the distance from the mean to the smallest/largest value supported by the distribution. \code{r=5^.5} corresponds to a standard deviation of 1.
 #' @return the quantile associated with \code{x}, \code{mu} and \code{r}.
 #' @keywords distribution
 #' @examples
