@@ -20,7 +20,8 @@ vector of random variables.
 This function works in conjuncture with \code{qepan} and \code{runif}
 }
 \examples{
-hist(repan(10000,mu=100,r=10)) #Generates and plots 10000 random observations
+#Generate and plot 10000 random observations:
+hist(repan(10000,mu=100,r=10))
 }
 \keyword{distribution}
 

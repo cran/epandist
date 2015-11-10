@@ -8,7 +8,14 @@
 #' @return the quantile associated with \code{x}, \code{mu} and \code{r}.
 #' @keywords distribution
 #' @examples
-#' qepan(p=.25,mu=100,r=10) #Calculates the lower quartile of an epan-distributed variable
+#' #Calculate the lower quartile of an epan-distributed variable:
+#' qepan(p=.25,mu=0,r=sqrt(5))
+#' 
+#' #Use qepan to confirm analytical solution
+#' #Find the quantile corresponding to p=(5+sqrt(5))/8=.9045 when mu=0 and r=sqrt(5):
+#' qepan(p=(5+sqrt(5))/8,mu=0,r=sqrt(5))
+#' #This is equal to 
+#' (5-sqrt(5))/2 
 
 
 qepan<-function(p,mu=0,r=5^0.5){
@@ -19,5 +26,5 @@ qepan<-function(p,mu=0,r=5^0.5){
     stop("p must be between 0 and 1")
   }
 
-    (2*cos(acos(1-2*p)/3-2*pi/3))*r+mu
+    2*sin(asin(2*p-1)/3)*r+mu
 }

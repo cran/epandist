@@ -20,7 +20,14 @@ the quantile associated with \code{x}, \code{mu} and \code{r}.
 The inverse of this function is \code{pepan}.
 }
 \examples{
-qepan(p=.25,mu=100,r=10) #Calculates the lower quartile of an epan-distributed variable
+#Calculate the lower quartile of an epan-distributed variable:
+qepan(p=.25,mu=0,r=sqrt(5))
+
+#Use qepan to confirm analytical solution
+#Find the quantile corresponding to p=(5+sqrt(5))/8=.9045 when mu=0 and r=sqrt(5):
+qepan(p=(5+sqrt(5))/8,mu=0,r=sqrt(5))
+#This is equal to
+(5-sqrt(5))/2
 }
 \keyword{distribution}
 

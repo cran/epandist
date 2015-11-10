@@ -20,8 +20,15 @@ point density associated with \code{x}, \code{mu} and \code{r}.
 This function is simply a polynomial of second degree.
 }
 \examples{
-curve(dnorm(x),xlim=c(-3,3))
-curve(depan(x),add=TRUE,col="green")
+#Probability distribution function, epanechnikov:
+curve(depan(x),col="blue",ylim=c(0,.4),xlim=c(-3.5,3.5),yaxs="i",xaxs="i",
+main="Probability distribution function",ylab="Probability")
+
+#Probability distribution function, normal:
+curve(dnorm(x),col="green",add=TRUE)
+
+#Legend
+legend(x=-3.5,y=.4,legend=c("Epanechnikov pdf","Normal pdf"),lty=c(1,1),col=c("blue","green"))
 }
 \keyword{distribution}
 

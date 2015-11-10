@@ -21,7 +21,12 @@ This function calculates the censoring point of a random left-censored epanechni
 The inverse of this function is \code{evepan}.
 }
 \examples{
-cepan(ev=103,mu=100,r=16) #Expected value of an epan-distributed variable left-censored at 103
+#Censoring point of an epan-distributed variable with an expected value of 3 (given mu=0 and r=16):
+cepan(ev=3,mu=0,r=16)
+
+#Censoring point of an epan-distributed variable with an expected value of 103 (mu=100 and r=32):
+cepan(ev=106,mu=100,r=32)
+#Results are usually not an integer though and rarely coinciding with mu
 }
 \keyword{distribution}
 

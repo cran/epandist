@@ -9,7 +9,12 @@
 #' @return the censoring point associated with \code{ev}, \code{mu} and \code{r}.
 #' @keywords distribution
 #' @examples
-#' cepan(ev=103,mu=100,r=16) #Expected value of an epan-distributed variable left-censored at 103
+#' #Censoring point of an epan-distributed variable with an expected value of 3 (given mu=0 and r=16):
+#' cepan(ev=3,mu=0,r=16)
+#' 
+#' #Censoring point of an epan-distributed variable with an expected value of 103 (mu=100 and r=32):
+#' cepan(ev=106,mu=100,r=32)
+#' #Results are usually not an integer though and rarely coinciding with mu
 
 
 
@@ -23,16 +28,17 @@ cepan <- function(ev, mu = 0, r=5^.5) {
     stop("Expected value of the left-censored variable must be greater than the mean of the uncensored distribution")
   }
 
-  c <- (ev-mu)/r
+  k <- (ev-mu)/r
 
-  tempvar0 <- (3^(1/2) * (27 * c^2 - 16 * c^3)^(1/2) + 9 * c)^(1/3)
-  tempvar1 <- (2 * 2^(2/3) * c/3^(1/3)/tempvar0 + 1 * 2^(1/3) * tempvar0/3^(2/3) + 1)^(1/2)
-  tempvar2 <- (-8 * 2^(2/3) * c/3^(1/3)/tempvar0 - 4 * 2^(1/3) * tempvar0/3^(2/3) + 8/tempvar1 + 8)^(1/2)/2
-  solution_to_quad<-tempvar1 - tempvar2
+  tempvar0 <- (3^(1/2) * (27 * k^2 - 16 * k^3)^(1/2) + 9 * k)^(1/3)
+  tempvar1 <- (2 * 2^(2/3) * k/3^(1/3)/tempvar0 + 1 * 2^(1/3) * tempvar0/3^(2/3) + 1)^(1/2)
+  tempvar2 <- (-8 * 2^(2/3) * k/3^(1/3)/tempvar0 - 4 * 2^(1/3) * tempvar0/3^(2/3) + 8/tempvar1 + 8)^(1/2)/2
+  solution_to_quad <- tempvar1 - tempvar2
 
+  c <- solution_to_quad*r + mu
 
-  ifelse (ev < mu+r,
-          solution_to_quad*r+mu,
+  ifelse (ev < mu + r,
+          c,
           ev
           )
 

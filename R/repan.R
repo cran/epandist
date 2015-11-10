@@ -8,7 +8,8 @@
 #' @return vector of random variables.
 #' @keywords distribution
 #' @examples
-#' hist(repan(10000,mu=100,r=10)) #Generates and plots 10000 random observations
+#' #Generate and plot 10000 random observations:
+#' hist(repan(10000,mu=100,r=10))
 
 
 repan<-function(n,mu=0,r=5^0.5){

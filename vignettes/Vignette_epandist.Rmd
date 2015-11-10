@@ -33,7 +33,7 @@ This equation is implemented in the `pepan`-function.
 
 Solving the cubic equation above yeilds the quantile function. It is beyond the scope of this introduction to show how this is done but the solution turns out to be
 
-$$Q(p\; | \; \mu,\; k)=2\,cos\Big(\frac{acos(1-2p)-2\pi}{3}\Big)r+\mu $$
+$$Q(p\; | \; \mu,\; k)=2\,sin\Big(\frac{asin(2p-1)}{3}\Big)r+\mu $$
 
 This equation is implemented in the `qepan`-function.
 

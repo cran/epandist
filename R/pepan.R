@@ -8,7 +8,18 @@
 #' @return probability of value below \code{x} given \code{mu} and \code{r}.
 #' @keywords distribution
 #' @examples
-#' pepan(x=-1.96,mu=0,r=5^.5) #Probability of a value below -1.96
+#' #Probability of a value below -1.96:
+#' pepan(x=-1.96,mu=0,r=5^.5)
+#'
+#' #Cumulative distribution function of epanechnikov distribution:
+#' curve(pepan(x),col="blue",xlim=c(-2.5,2.5),yaxs="i",xaxs="i",
+#' main="Cumulative distribution function",ylab="Probability")
+#'
+#' #Cumulative distribution function of standard normal distribution:
+#' curve(pnorm(x),col="green",add=TRUE)
+#'
+#' #Legend
+#' legend(x=-2.5,y=1,legend=c("Epanechnikov cdf","Normal cdf"),lty=c(1,1),col=c("blue","green"))
 
 
 pepan <- function(x = 0, mu = 0, r = 5^0.5) {
