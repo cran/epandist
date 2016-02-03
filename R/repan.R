@@ -12,13 +12,13 @@
 #' hist(repan(10000,mu=100,r=10))
 
 
-repan<-function(n,mu=0,r=5^0.5){
-  if (any(r <= 0)) {
-    stop("Range must be strictly positive")
-  }
-  if (n%%1 != 0 | n<1) {
-    stop("n must be an integer")
-  }
-
-  qepan(runif(n,min=0,max=1),mu,r)
-}
+repan <- function(n, mu = 0, r = 5^0.5) {
+    if (any(r <= 0)) {
+        stop("Range must be strictly positive")
+    }
+    if (n%%1 != 0 | n < 1) {
+        stop("n must be an integer")
+    }
+    
+    qepan(runif(n, min = 0, max = 1), mu, r)
+} 

@@ -17,8 +17,8 @@ The Epanechnikov kernel is often used in the context of non-parametric estimatio
 
 ```{r fig.height=4.2, fig.width=5.25}
 require("epandist")
-curve(depan(x),xlim=c(-2.5,2.5),yaxs='i',col="blue")  #Mean=0, sd=1
-title("The Epanechnikov probability distribution function",cex.main=1)
+curve(depan(x), xlim=c(-2.5, 2.5), yaxs='i', col="blue")  #Mean=0, sd=1
+title("The Epanechnikov probability distribution function", cex.main=1)
 ```
 
 
@@ -27,13 +27,13 @@ The Epanechnikov distribution is controlled by two parameters: $\mu$ and $r$. $\
 ## The cumulative distribution function and the quantile function
 
 The cumulative distribution function is given by
-$$P(X<k\; | \; \mu,\; k)=\frac{ -\Big(\frac{k-\mu}{r}\Big)^3 + 3\Big(\frac{k-\mu}{r}\Big) + 2}{4} $$
+$$P(X<k\; | \; \mu,\; r)=\frac{ -\Big(\frac{k-\mu}{r}\Big)^3 + 3\Big(\frac{k-\mu}{r}\Big) + 2}{4} \qquad k \in (\mu-r;\; \mu+r)$$
 
 This equation is implemented in the `pepan`-function.
 
 Solving the cubic equation above yeilds the quantile function. It is beyond the scope of this introduction to show how this is done but the solution turns out to be
 
-$$Q(p\; | \; \mu,\; k)=2\,sin\Big(\frac{asin(2p-1)}{3}\Big)r+\mu $$
+$$Q(p\; | \; \mu,\; r)=2\,sin\Big(\frac{asin(2p-1)}{3}\Big)r+\mu \qquad p \in (0;\; 1)$$
 
 This equation is implemented in the `qepan`-function.
 
@@ -42,14 +42,14 @@ Consider an epanechnikov-distributed variable with distribution parameters $\mu=
 
 What is the probability that $x<8\,$? To answer this question use the `pepan`-function:
 ```{r}
-pepan(x=8,mu=10,r=4) #Calculate probability
+pepan(x=8, mu=10, r=4) #Calculate probability
 ```
 The propability of drawing a value below 8 is thus 15.6 percent.
 
 Where is the lower and upper quartile located? To answer this question use the `qepan`-function:
 ```{r,results='hold'}
-qepan(p=0.25,mu=10,r=4) #Lower quantile 
-qepan(p=0.75,mu=10,r=4) #Upper quantile
+qepan(p=0.25, mu=10, r=4) #Lower quantile 
+qepan(p=0.75, mu=10, r=4) #Upper quantile
 ```
 Thus half of the observations drawn from the distribution are located between 8.6 and 11.4.
 
@@ -57,22 +57,42 @@ Thus half of the observations drawn from the distribution are located between 8.
 ##Working with censored variables
 As has already been stated the Epanechnikov distribution is convenient when working with censored variables since it allows for calculating of the expected value and the censoring point. In the remaining part of this introduction these properties are demonstrated.
 
-### Example - using `evepan` and `cepan`
+### Example -  using `evepan`
 Consider an epanechnikov-distributed variable with zero mean and a standard deviation of 1 (corresponding to $r=\sqrt{5}$). The distribution is left-censored at $-\frac{1}{2}$. What is the expected value? To answer this question use the `evepan`-function:
 
 ```{r}
-evepan(c=-.5,mu=0,r=5^.5) #Calculate expected value
+evepan(c=-.5, mu=0, r=5^.5, side_censored = "left") #Calculate expected value
 ```
 
 Not surprisingly the expected value is greater than $\mu$.
 
+### Mathematical foundation
+
+Readers who are mathematically inclined may also think of this type of problem in terms of mathematical notation. Finding the expected abatement is the equivalent of solving the integral below:
+
+$$E(x\; |\; c)\; =\; \int_{c}^{\infty} pdf(x)*(x-c)\;dx$$
+
+where $c$ denotes the censoring point and $pdf(x)$ is the probability distribution function. Inserting the Epanechnikov probability distribution function - i.e. a concave pylonomial of second degree - yields
+
+
+$$E(x\; | \; \mu,\; r,\; c)\; =\;\frac{r}{16}\Big(1-\frac{c-\mu}{r}\Big)^3\Big(3+\frac{c-\mu}{r}\Big)+c \qquad c \in (\mu-r;\; \mu+r) $$
+
+
+The `evepan`-function is essentially just an implementation of an integral with an algebraic solution; an equation of fourth degree.
+
+### Example -  using `cepan`
+
+In the previous example the expected value was calculated for a variable with a known censoring point. The opposite problem may also occur. 
+
 Which censoring point yields an expected value of 1? To answer this question use the `cepan`-function:
 
 ```{r}
-cepan(ev=1,mu=0,r=5^.5) #Calculate censoring point
+cepan(ev=1, mu=0, r=5^.5, side_censored = "left") #Calculate censoring point
 ```
 
 Thus a censoring point at 0.9 yields an expected value of 1.
+
+The result above is calculated by solving the previously mentioned fourth degree equation. The resulting expression is rather lengthy and contains several square- and cubic-roots (which the `cepan`-functions evaluates behind the scenes). However it is noteworthy that an exact solution can be derived in the first place (a task that requires patience and determination). Users are encouraged to take a look at the source code.
 
 
 ## Case study - the effect of an emission ceiling
@@ -82,51 +102,41 @@ When may the expected value of a censored variable be of interest?  If e.g. the 
 ### Calculating expected abatement
 Assume that future emissions in the absence of the ceiling are Epanechnikov-distributed between 90 and 110. A ceiling at 101 is suggested. What is the expected abatement?
 
-Clearly the answer is not 0 since it is possible that the realized emissions in the absence of the ceiling would exceed 100.
-
-In the presence of an emission ceiling the realized emission may be thought of as a random *right*-censored variable. Subtracting the expected value of this variable from the initial mean (i.e. 100) yields the expected abatement. 
-
-However the `epandist`-package only supports *left*-censored variables. Fortunately the problem can easily be expressed in terms of the expectation of a left-censored variable by simply mirroring the distribution, i.e. by changing the sign of the censoring-point and the mean. Thus the expected abatement may be calculated by using the `evepan`-function:
+Clearly the answer is not 0 since it is possible that the realized emissions in the absence of the ceiling would exceed 100. In the presence of an emission ceiling the realized emission may be thought of as a random right-censored variable. Subtracting the expected value of this variable from the initial mean (i.e. 100) yields the expected abatement. Thus the expected abatement may be calculated by using the `evepan`-function:
 
 ```{r}
-evepan(c=100-101,mu=0,r=10) #Calculate expected abatement
+100 - evepan(c=101, mu=100, r=10, side_censored = "right") #Calculate expected abatement
 ```
 
 Hence the expected abatement is around 1.4 percent.
 
 Let us check if the answer is correct by generating random data which can be used to calculate an approximate solution:
 ```{r}
-censoringpoint<- 101
+censoringpoint <- 101
 
-dist_mean<-100 #Mean prior to censoring
+dist_mean <- 100 #Mean prior to censoring
 
-dist_range<-10 #Half of distribution range
+dist_range <- 10 #Half of distribution range
 
-x<-repan(1000000,dist_mean,dist_range) #Generating epan-distibuted random data
+x <- repan(1000000, dist_mean, dist_range) #Generating epan-distibuted random data
 
-x[x > censoringpoint]<- censoringpoint #Censoring data
+x[x > censoringpoint] <- censoringpoint #Censoring data
 
-dist_mean-mean(x) #Approximate expected abatement
+dist_mean - mean(x) #Approximate expected abatement
 ```
 
 The author finds this verification very pleasing.
 
-Readers who are mathematically inclined may also think of this type of problem in terms of mathematical notation. Finding the expected abatement is the equivalent of solving the integral below:
 
-$$\int_{c}^{\infty} pdf(x)*(x-c)\;dx$$
-
-where $c$ denotes the censoring point (i.e. the ceiling) and $pdf(x)$ is the Epanechnikov probability distribution function. The `evepan`-function is essentially just an implementation of an integral with an algebraic solution; an equation of fourth degree.
 
 ### Setting the ceiling
 
-Say that the 1.4 percent expected abatement found in the previous example is considered too ambitious by policy makers. What ceiling corresponds to an expected abatement of exactly 1 percent?
-We can calculate this by simply reversing the logic from the example above. 
+Say that the 1.4 percent expected abatement found in the previous example is considered too ambitious by policy makers. Which ceiling level corresponds to an expected abatement of exactly 1 percent?
 
 ```{r}
-100-cepan(ev=1,mu=0,r=10) #Calculate censoring point
+cepan(ev=99, mu=100, r=10, side_censored = "right") #Calculate censoring point
 ```
 
 Thus an emission ceiling 2.1 percent above the "main scenario"-level (i.e. at 102.1) will result in an expected abatement of 1 percent.
 
-The result above is calculated by solving the previously mentioned fourth degree equation. The resulting expression is rather lengthy and contains several square- and cubic-roots (which the `cepan`-functions evaluates behind the scenes). However it is noteworthy that an exact solution can be derived in the first place. Users are encouraged to take a look at the source code.
-
+Assuming that future emissions are subject to Epanechnikov-distributed uncertainty is of course not entirely innocent. Nevertheless this is much preferable to ignoring uncertainty altogether which regrettably is a common approach.

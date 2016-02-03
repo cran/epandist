@@ -14,7 +14,7 @@ The epandist-package contains the following functions:
 
 -   'repan()': Generate random uncensored epanechnikov-distributed data
 
--   'evepan()': Calculate expected value for a left-censored variable
+-   'evepan()': Calculate expected value for a censored variable
 
 -   'cepan()': Calculate censoring point
 

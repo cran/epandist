@@ -4,7 +4,7 @@
 \alias{cepan}
 \title{Calculate censoring point}
 \usage{
-cepan(ev, mu = 0, r = 5^0.5)
+cepan(ev, mu = 0, r = 5^0.5, side_censored = "left")
 }
 \arguments{
 \item{ev}{expected value.}
@@ -12,20 +12,24 @@ cepan(ev, mu = 0, r = 5^0.5)
 \item{mu}{mean of distribution prior to censoring.}
 
 \item{r}{half the range of the distribution, ie the distance from the mean to the smallest/largest value supported by the distribution. \code{r=5^.5} corresponds to a standard deviation of 1.}
+
+\item{side_censored}{indicates whether the variable is \code{left} or \code{right} censored. Default is \code{side_censored='left'}}
 }
 \value{
 the censoring point associated with \code{ev}, \code{mu} and \code{r}.
 }
 \description{
-This function calculates the censoring point of a random left-censored epanechnikov-distributed variable associated a given expected value.
+This function calculates the censoring point of a random censored epanechnikov-distributed variable associated a given expected value.
 The inverse of this function is \code{evepan}.
 }
 \examples{
-#Censoring point of an epan-distributed variable with an expected value of 3 (given mu=0 and r=16):
+#Censoring point of a left-censored epan-distributed variable
+#with an expected value of 3 (given mu=0 and r=16):
 cepan(ev=3,mu=0,r=16)
 
-#Censoring point of an epan-distributed variable with an expected value of 103 (mu=100 and r=32):
-cepan(ev=106,mu=100,r=32)
+#Censoring point of a right-censored epan-distributed variable
+#with an expected value of 103 (given mu=100 and r=32):
+cepan(ev=94,mu=100,r=32,side_censored="right")
 #Results are usually not an integer though and rarely coinciding with mu
 }
 \keyword{distribution}

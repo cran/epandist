@@ -18,13 +18,13 @@
 #' (5-sqrt(5))/2 
 
 
-qepan<-function(p,mu=0,r=5^0.5){
-  if (any(r <= 0)) {
-    stop("Range must be strictly positive")
-  }
-  if (any(abs(p-.5)>.5)) {
-    stop("p must be between 0 and 1")
-  }
-
-    2*sin(asin(2*p-1)/3)*r+mu
-}
+qepan <- function(p, mu = 0, r = 5^0.5) {
+    if (any(r <= 0)) {
+        stop("Range must be strictly positive")
+    }
+    if (any(abs(p - 0.5) > 0.5)) {
+        stop("p must be between 0 and 1")
+    }
+    
+    2 * sin(asin(2 * p - 1)/3) * r + mu
+} 

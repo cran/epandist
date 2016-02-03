@@ -12,30 +12,24 @@
 #' pepan(x=-1.96,mu=0,r=5^.5)
 #'
 #' #Cumulative distribution function of epanechnikov distribution:
-#' curve(pepan(x),col="blue",xlim=c(-2.5,2.5),yaxs="i",xaxs="i",
-#' main="Cumulative distribution function",ylab="Probability")
+#' curve(pepan(x),col='blue',xlim=c(-2.5,2.5),yaxs='i',xaxs='i',
+#' main='Cumulative distribution function',ylab='Probability')
 #'
 #' #Cumulative distribution function of standard normal distribution:
-#' curve(pnorm(x),col="green",add=TRUE)
+#' curve(pnorm(x),col='green',add=TRUE)
 #'
 #' #Legend
-#' legend(x=-2.5,y=1,legend=c("Epanechnikov cdf","Normal cdf"),lty=c(1,1),col=c("blue","green"))
+#' legend(x=-2.5,y=1,legend=c('Epanechnikov cdf','Normal cdf'),lty=c(1,1),col=c('blue','green'))
 
 
 pepan <- function(x = 0, mu = 0, r = 5^0.5) {
-  # Cumulative distribution function
-  if (any(r <= 0)) {
-    stop("Range must be strictly positive")
-  }
-
-  alpha <- (x - mu)/r
-
-  ifelse(abs(alpha)<=1,
-         1/4 * (-alpha^3 + 3 * alpha + 2),
-         ifelse(alpha< -1,
-               0,
-               1
-                )
-         )
-
-}
+    # Cumulative distribution function
+    if (any(r <= 0)) {
+        stop("Range must be strictly positive")
+    }
+    
+    alpha <- (x - mu)/r
+    
+    ifelse(abs(alpha) <= 1, 1/4 * (-alpha^3 + 3 * alpha + 2), ifelse(alpha < -1, 0, 1))
+    
+} 

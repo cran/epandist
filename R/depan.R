@@ -9,24 +9,21 @@
 #' @keywords distribution
 #' @examples
 #' #Probability distribution function, epanechnikov:
-#' curve(depan(x),col="blue",ylim=c(0,.4),xlim=c(-3.5,3.5),yaxs="i",xaxs="i",
-#' main="Probability distribution function",ylab="Probability")
+#' curve(depan(x),col='blue',ylim=c(0,.4),xlim=c(-3.5,3.5),yaxs='i',xaxs='i',
+#' main='Probability distribution function',ylab='Probability')
 #'
 #' #Probability distribution function, normal:
-#' curve(dnorm(x),col="green",add=TRUE)
+#' curve(dnorm(x),col='green',add=TRUE)
 #'
 #' #Legend
-#' legend(x=-3.5,y=.4,legend=c("Epanechnikov pdf","Normal pdf"),lty=c(1,1),col=c("blue","green"))
+#' legend(x=-3.5,y=.4,legend=c('Epanechnikov pdf','Normal pdf'),lty=c(1,1),col=c('blue','green'))
 
 
 depan <- function(x = 0, mu = 0, r = 5^0.5) {
-  # Distribution function
-  if (any(r <= 0)) {
-    stop("Range must be strictly positive")
-  }
-  ifelse (abs(x - mu) < r,
-          3/4 * (1 - ((x - mu)/r)^2)/r,
-          0
-          )
-
-}
+    # Distribution function
+    if (any(r <= 0)) {
+        stop("Range must be strictly positive")
+    }
+    ifelse(abs(x - mu) < r, 3/4 * (1 - ((x - mu)/r)^2)/r, 0)
+    
+} 

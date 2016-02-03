@@ -4,7 +4,7 @@
 \alias{evepan}
 \title{Calculate expected value of censored variable}
 \usage{
-evepan(c = 0, mu = 0, r = 5^0.5)
+evepan(c = 0, mu = 0, r = 5^0.5, side_censored = "left")
 }
 \arguments{
 \item{c}{censoring point.}
@@ -12,12 +12,14 @@ evepan(c = 0, mu = 0, r = 5^0.5)
 \item{mu}{mean of distribution prior to censoring.}
 
 \item{r}{half the range of the distribution, ie the distance from the mean to the smallest/largest value supported by the distribution. \code{r=5^.5} corresponds to a standard deviation of 1.}
+
+\item{side_censored}{indicates whether the variable is \code{left} or \code{right} censored. Default is \code{side_censored='left'}}
 }
 \value{
 the expected value associated with \code{c}, \code{mu} and \code{r}.
 }
 \description{
-This function calculates the expected value of a random left-censored epanechnikov-distributed variable with a given censoring point.
+This function calculates the expected value of a random censored epanechnikov-distributed variable with a given censoring point.
 The inverse of this function is \code{cepan}.
 }
 \examples{
@@ -25,18 +27,18 @@ The inverse of this function is \code{cepan}.
 evepan(c=100,mu=100,r=10)
 
 #Expected value as a function of censoring point, epanechnikov distribution:
-curve(evepan(c=x),col="blue",xlim=c(-sqrt(5),sqrt(5)),yaxs="i",xaxs="i",
-main="Expected value as a function of censoring point",xlab="Censoring point",ylab="Expected value")
+curve(evepan(c=x),col='blue',xlim=c(-sqrt(5),sqrt(5)),yaxs='i',xaxs='i',
+main='Expected value as a function of censoring point',xlab='Censoring point',ylab='Expected value')
 
 #Expected value as a function of censoring point, normal distribution:
-curve(dnorm(x)+pnorm(x)*x,col="green",add=TRUE)
+curve(dnorm(x)+pnorm(x)*x,col='green',add=TRUE)
 
 #Expected value as a function of censoring point, no uncertainty:
-curve(1*x,col="grey",add=TRUE)
+curve(1*x,col='grey',add=TRUE)
 
 #Legend
-legend(x=-sqrt(5),y=sqrt(5),legend=c("Epanechnikov","Normal distribution","No uncertainty"),
-lty=c(1,1),col=c("blue","green","grey"))
+legend(x=-sqrt(5),y=sqrt(5),legend=c('Epanechnikov','Normal distribution','No uncertainty'),
+lty=c(1,1),col=c('blue','green','grey'))
 }
 \keyword{distribution}
 
