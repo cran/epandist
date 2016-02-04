@@ -49,7 +49,7 @@ cepan <- function(ev, mu = 0, r = 5^0.5, side_censored = "left") {
 
     solution_in_interval <- setsign * solution_to_quad * r + mu
 
-    ifelse(setsign * ev < mu + r, solution_in_interval, ev)
+    ifelse(setsign * (ev - mu) < r, solution_in_interval, ev)
 
 
 }
